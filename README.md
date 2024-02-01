@@ -53,6 +53,25 @@ This project is a .NET Core-based web application designed to manage and visuali
 ### Screenshots (Login Required)
 
 Please refer to the attached screenshots to visualize the data within the application. Note that login credentials are required for access.
+**Login screen**
+
+![image](https://github.com/WabbaJag/Project_CL2/assets/77464733/e0120c2c-85e1-4723-9d00-8c73cdac1e73)
+
+
+**Dashboard**
+
+![image](https://github.com/WabbaJag/Project_CL2/assets/77464733/c1cd6999-a9ab-4955-9879-fcc73774a7bc)
+
+**Table view**
+
+![image](https://github.com/WabbaJag/Project_CL2/assets/77464733/f507237f-ca04-4155-8565-a6d0f6e69a9f)
+
+**Detail view**
+
+![image](https://github.com/WabbaJag/Project_CL2/assets/77464733/421a32ab-bcc5-4c0f-a849-832fec2473a8)
+
+**PowerBI Infographs**
+
 ![image](https://github.com/WabbaJag/Project_CL2/assets/77464733/c04fe094-49a8-47c1-ab28-fa58c7a260bf)
 
 ![image](https://github.com/WabbaJag/Project_CL2/assets/77464733/3d3ecabd-3b50-48aa-8c98-3f09d02bc785)
