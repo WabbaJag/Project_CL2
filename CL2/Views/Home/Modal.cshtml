@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Modal";
+}
+
+<h1>Modal</h1>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10">
+            <button id="btnclick" type="button">
+                Click For Login
+            </button>
+            <div class="modal fade" id="login">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                x
+                            </button>
+                            <h4 class="modal-title">Login</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="fomr-group">
+                                    <input class="form-control" type="text"
+                                           placeholder="Username" id="usernametxt" />
+                                </div>
+                                <div class="fomr-group">
+                                    <input class="form-control" type="text"
+                                           placeholder="Password" id="passwordtxt" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" id="HidebtnModal" class="btn btn-primary">Hide</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnClick").click(function () {
+            $("#login").modal('show');
+        });
+        $("#hidebtnModal").click(function () {
+            $("#login").modal('hide');
+        });
+    });
+</script>

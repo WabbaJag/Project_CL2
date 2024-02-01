@@ -1,0 +1,38 @@
+﻿
+
+@model CL2.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+<partial name="_NotificationPartial" />
+
+<div class="container-fluid px-4">
+
+    <h1>¿Desea eliminar esta usuario?</h1>
+    <div>
+        <h4>Fracción</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+           
+        </dl>
+        <hr />
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="@Model.Id" />
+            <div class="form-group btn-group mt-lg-4" role="group">
+                <a asp-controller="Administration" asp-action="ListUsers" class="btn btn-dark">Volver</a>
+                <input type="submit" value="Eliminar" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="~/js/functions.js"></script>

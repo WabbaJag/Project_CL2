@@ -1,0 +1,72 @@
+﻿@model CL2.Models.Plenario
+
+@{
+    ViewData["Title"] = "Eliminar Plenario";
+}
+
+<body class="sb-nav-fixed">
+    <h1 class="mt-4">¿Desea eliminar este Plenario?</h1>
+    <div class="mt-lg-3">
+
+
+        @* Breadcrumb *@
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-area="" asp-controller="Plenarios" asp-action="Index">Plenarios</a>
+            </li>
+            <li class="breadcrumb-item active">Eliminar Plenario</li>
+        </ol>
+
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayName("Administración")
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Administracion.AdministracionPeriodo)
+            </dd>
+        </dl>
+
+
+        @* Integrantes del plenario *@
+        <form asp-area="" asp-controller="IntegrantesPlenario" asp-action="Index">
+            <table class="table mt-lg-3  table-hover table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th class="align-items-lg-center">
+                            @Html.DisplayName("Integrates de Plenario")
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.IntegrantesPlenarios)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Diputado.NombreDiputado)   @Html.DisplayFor(modelItem => item.Diputado.PrimerApellido)
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+         <hr />
+        <form asp-action="Delete">           
+            <input type="hidden" asp-for="PlenarioID" />
+            <div class="btn-group" role="group">
+                <a asp-action="Index" class="btn btn-dark">Volver</a>
+                <input type="submit" value="Eliminar" class="btn btn-danger" />
+            </div>
+          
+        </form>
+    </div>
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>

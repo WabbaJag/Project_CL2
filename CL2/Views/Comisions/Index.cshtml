@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CL2.Models.Comision>
+
+@{
+    ViewData["Title"] = "Comisiones";
+}
+
+<partial name="_NotificationPartial" />
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link runat="server" rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="favicon.ico" type="image/ico" />
+</head>
+<body class="sb-nav-fixed">
+
+    <main>
+        @* Encabezado de Comisiones y Breadcrumb *@
+        <div class="container-fluid">
+            <h1 class="mt-4">Comisiones</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item active">Comisiones</li>
+            </ol>
+            <div class="mt-4">
+                <asp:Button OnClick="location.href = '@Url.Action("Create","Comisions")'" runat="server" ID="agregar" />
+            </div>
+
+            @* Tabla de Comisiones *@
+            <table class="table table-bordered mt-lg-3  table-hover table-responsive-sm" id="tablaSmart">
+                <thead class="thead-dark text-white">
+                    <tr class="text-lg-center ">
+                        <th>
+                            @Html.DisplayName("Comisión")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Detalle")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Tipo")
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-lg-center">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NombreComision)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Detalle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tipo)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ComisionID" class="badge badge-warning">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@item.ComisionID" class="badge badge-primary">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ComisionID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,99 @@
+﻿@model List<CL2.Models.ViewModel.UserRoleViewModel>
+
+@{
+    var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
+    
+}
+
+@{
+    ViewData["Title"] = "Gestión Usuarios de Rol";
+
+}
+
+<partial name="_NotificationPartial" />
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+</head>
+<body>
+    <main>
+        <div class="container-fluid">
+
+            <h1 class="mt-4">Agregar o Remover Usuarios del Rol</h1>
+
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Administration" asp-action="ListRoles">Gestión de Roles</a></li>
+                <li class="breadcrumb-item active">Agregar o Remover Usuarios del Rol</li>
+            </ol>
+
+            @* muestra el Rol *@
+            <div class="mb-lg-5 mt-lg-3">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Rol:   @roleName</h4> 
+                    </div>
+                   
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h6>
+                                    Usuarios
+                                </h6>  
+                            </div>
+                            <div class="card-body">
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <div class="form-check m-1">
+                                        <input type="hidden" asp-for="@Model[i].UserId" />
+                                        <input type="hidden" asp-for="@Model[i].UserName" />
+                                        <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                                        <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                                            @Model[i].UserName
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <div class="card-footer align-content-center">
+                                <div class="btn-group mt-lg-4" role="group">
+                                    <a asp-action="ListRoles" class="btn btn-dark">Volver</a>
+                                    <input type="submit" value="Guardar" class="btn btn-success" />
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @section Scripts {
+                <partial name="_ValidationScriptsPartial" />
+            }
+        </div>
+    </main>
+</body>
+</html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>

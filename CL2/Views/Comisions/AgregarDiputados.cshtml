@@ -1,0 +1,71 @@
+﻿@model CL2.Models.Comision
+
+@{
+    ViewData["Title"] = "Agregar Diputados a Comisión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var idLegislativo = ViewBag.LegislativoID;
+    //var idComision = ViewBag.IdComision;
+ 
+}
+
+<body class="sb-nav-fixed">
+    <main>
+
+        <div class="container-fluid px-4">
+
+            <h1 class="mt-lg-4">Agregar Diputados a comisión</h1>
+            <hr />
+
+            @* Breadcrumb *@
+
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Comisions" asp-action="Index">Comisiones</a></li>
+                <li class="breadcrumb-item active">Agregar</li>
+            </ol>
+            <hr />
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    @* Form de Agregar Año legislativo a comisión *@
+                    <form asp-action="AgregarDiputados">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <h5 class="mt-lg-4">Diputados</h5>
+                        <ul class="list-group-item" style="list-style-type:none">
+
+                            @foreach (var dip in ViewBag.Diputados)
+                            {
+                               
+                            <li>
+                                <input type="checkbox" name="DiputadosID" value="@dip.DiputadoID" /> @dip.NombreDiputado  @dip.PrimerApellido @dip.SegundoApellido
+                            </li>
+                             
+
+                            }
+
+                        </ul>
+
+                        
+
+
+                        @* grupo de botones al final: agregar y atrás*@
+                        <div class="form-group btn-group mt-lg-4" role="group">
+                            <a asp-action="Index" class="btn btn-dark">Volver</a>
+                            <button type="submit" class="btn btn-success">Finalizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

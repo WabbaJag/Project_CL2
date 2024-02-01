@@ -1,0 +1,41 @@
+﻿@model CL2.Models.Tema
+
+@{
+    ViewData["Title"] = "Agregar Tema";
+}
+<partial name="_NotificationPartial" />
+<div class="container-fluid px-4 mt-4">
+
+    <h1 class="mt-4">Agregar Tema</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+            {
+                @Html.AntiForgeryToken()
+            }
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="TemaDesc" class="control-label"></label>
+                    <input asp-for="TemaDesc" class="form-control" />
+                    <span asp-validation-for="TemaDesc" class="text-danger"></span>
+                </div>
+                <div class="form-group btn-group mt-lg-4" role="group">
+                    <a asp-controller="Utilidades" asp-action="Index" class=" btn btn-dark">Volver</a>
+                    <button type="submit" class="btn btn-success">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr />
+    <div>
+
+    </div>
+
+</div>
+
+<script src="~/js/functions.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>

@@ -1,0 +1,42 @@
+﻿@model CL2.Models.ProyectoDiputado
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ProyectoDiputado</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProyectoLeyID" class="control-label"></label>
+                <select asp-for="ProyectoLeyID" class="form-control" asp-items="ViewBag.ProyectoLeyID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiputadoID" class="control-label"></label>
+                <select asp-for="DiputadoID" class="form-control" asp-items="ViewBag.DiputadoID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>

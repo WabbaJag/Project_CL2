@@ -1,0 +1,92 @@
+﻿@model CL2.Models.ComisionLegislativo
+
+@{
+    ViewData["Title"] = "Agregar Año Legislativo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var idComision = ViewBag.IdComision;
+    var volver = Convert.ToString(ViewData["VolverAEditar"]);
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<body class="sb-nav-fixed">
+    <main>
+
+        <div class="container-fluid px-4">
+
+            <h1 class="mt-lg-4">Agregar año legislativo a Comisión</h1>
+
+
+            @* Breadcrumb *@
+
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Comisions" asp-action="Index">Comisiones</a></li>
+                <li class="breadcrumb-item active">Agregar Año Legislativo a Comisión</li>
+            </ol>
+            <hr />
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">
+                        Elija el año legislativo durante el cual funcionó la comisión, y luego elija los y las diputados y diputadas integrantes de la comisión.
+                    </div>
+                    @* Form de Agregar Año legislativo a comisión *@
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="LegislativoID" class="control-label">Seleccionar Administración</label>
+                        <select asp-for="LegislativoID" class="form-control" asp-items="ViewBag.listaLegislativo"
+                                onchange="MostrarDiputadosPorAnoLegislativo()" id="selectAnoLegislativo">
+                            <option disabled selected value="0">-- Seleccione un año legislativo --</option>
+                        </select>
+                        <span asp-validation-for="LegislativoID" class="text-danger" />
+                    </div>
+                    <br />
+                    <div class="card">
+                        <div class="card-header">
+                            Diputados
+                        </div>
+                        <div class="card-body">
+                            <p>Seleccione los diputados por agregar a la comisión:</p>
+                            <br />
+                            <div class="spinner-border" role="status" id="loadingSpinner">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <ul class="list-group-item" style="list-style-type:none" id="listaDiputados">
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="form-group btn-group mt-lg-4" role="group">
+
+                        @if (volver == "regrese")
+                        {
+                            <a hidden asp-action="Edit" asp-route-id=@idComision class="btn btn-dark" id="regresar">Volver</a>
+                        }
+                        else
+                        {
+                            <a hidden asp-action="Details" asp-route-id=@idComision class="btn btn-dark" id="regresar">Volver</a>
+                        }
+                        <button class="btn btn-dark" onclick="ValidateReturn()">Volver</button>
+                        <!-- Botón para abrir el modal -->
+                        <button type="button" class="btn btn-success" onclick="RegistrarAnoLegislativoAComision(@idComision,0)">
+                            Agregar
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+
+

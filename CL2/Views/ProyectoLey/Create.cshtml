@@ -1,0 +1,157 @@
+﻿@model CL2.Models.ProyectoLey
+
+@{
+    ViewData["Title"] = "Agregar Proyecto de Ley";
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+
+}
+<html>
+<body class="sb-nav-fixed">
+    <main>
+
+        <div class="container-fluid px-4">
+            <h1 class="mt-lg-4">Agregar Proyecto de Ley</h1>
+
+
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="ProyectoLey" asp-action="Index">Proyectos de Ley</a></li>
+                <li class="breadcrumb-item active">Agregar Proyecto de Ley</li>
+            </ol>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-4">
+
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    }
+
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="NumeroExpediente" class="control-label"></label>
+                            <input asp-for="NumeroExpediente" class="form-control" />
+                            <span asp-validation-for="NumeroExpediente" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TituloCorto" class="control-label"></label>
+                            <input asp-for="TituloCorto" class="form-control" />
+                            <span asp-validation-for="TituloCorto" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TituloCompleto" class="control-label"></label>
+                            <input asp-for="TituloCompleto" class="form-control" />
+                            <span asp-validation-for="TituloCompleto" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FechaPresentacion" class="control-label"></label>
+                            <input asp-for="FechaPresentacion" class="form-control" />
+                            <span asp-validation-for="FechaPresentacion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CantidadFirmas" class="control-label"></label>
+                            <input asp-for="CantidadFirmas" class="form-control" />
+                            <span asp-validation-for="CantidadFirmas" class="text-danger"></span>
+                        </div>
+                        <hr />
+                        @* grupo de botones al final: agregar y atrás *@
+                        <div class="form-group btn-group mt-lg-4" role="group">
+                            <a hidden asp-action="Index" class="btn btn-dark" id="regresar"></a>
+                            <button class="btn btn-dark" onclick="ValidateReturn()">Volver</button>
+                            <!-- Botón para abrir el modal -->
+                            <input type="button" value="Agregar" class="btn btn-success" onclick="RegistrarProyecto()" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+
+<script type="text/javascript">
+    function RegistrarProyecto() {
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var numeroExpediente = $("#NumeroExpediente").val();
+        var tituloCorto = $("#TituloCorto").val();
+        var tituloCompleto = $("#TituloCompleto").val();
+        var fechaPresentacion = $("#FechaPresentacion").val();
+        var cantidadFirmas = $("#CantidadFirmas").val();
+
+        if (form.valid()) {
+            Swal.fire({
+                title: "Confirmación",
+                text: "¿Desea agregar el Proyecto de Ley No. " + numeroExpediente + "?",
+                icon: "question",
+                showDenyButton: true,
+                confirmButtonText: 'Sí',
+                denyButtonText: 'No'
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ProyectoLey/Create',
+                            data: {
+                                __RequestVerificationToken: token,
+                                NumeroExpediente: numeroExpediente,
+                                TituloCorto: tituloCorto,
+                                TituloCompleto: tituloCompleto,
+                                FechaPresentacion: fechaPresentacion,
+                                CantidadFirmas: cantidadFirmas
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.mensaje == '1') {
+                                    var idProyecto = data.idProyecto;
+                                    Swal.fire({
+                                        title: '¡Proyecto creado!',
+                                        text: 'El Proyecto de Ley fue creado exitosamente. Favor esperar para agregar los diputados y temas del proyecto.',
+                                        icon: 'success',
+                                        timer: 3000
+                                    });
+                                    setTimeout(() => {
+                                        const x = window.location.origin;
+                                        location.replace(`${x}/ProyectoLey/AddTemaAndDiputados?id=` + idProyecto);
+                                    }, 3000);
+                                } else if (data.mensaje == 'expedienteExistente') {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Proyecto no Agregado',
+                                        text: 'Ya existe un Proyecto con ese número de expediente.'
+                                    })
+                                } else {
+                                    Swal.fire(
+                                        '¡Ups!',
+                                        'Ocurrió un error al crear el proyecto.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function (data) {
+                                Swal.fire(
+                                    '¡Ups!',
+                                    'Ocurrió un error al crear el proyecto.',
+                                    'error'
+                                );
+                            }
+                        });
+                    } else {
+                        Swal.fire('No fue agregada.', '', 'info')
+                    }
+                });
+        }
+    }
+
+</script>

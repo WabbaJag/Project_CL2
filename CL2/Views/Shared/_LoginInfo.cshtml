@@ -1,0 +1,43 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+<ul class="navbar-nav">
+ 
+
+        @if (_signInManager.IsSignedIn(User))
+        {
+    <li class="nav-item dropdown align-content-start">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+        <ul class="dropdown-menu listRight" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Cambiar Contraseña</a></li>
+            @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <li><a class="dropdown-item" asp-action="ListUsers" asp-controller="Administration">Usuarios </a></li>
+                <li><a class="dropdown-item" asp-action="ListRoles" asp-controller="Administration">Roles de Usuario</a></li>
+
+            }
+
+
+            <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Salir</a></li>
+        </ul>
+
+
+    </li>
+            
+       
+    }
+
+    else
+    {
+<li class="nav-item dropdown align-content-end">
+    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+    <ul class="dropdown-menu listRight" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" asp-controller="Account" asp-action="Iniciar Sesión" asp-route-returnUrl="@Context.Request.Path">Login</a></li>
+        <li> <a class="dropdown-item" asp-controller="Account" asp-action="Signup">Crear Cuenta</a></li>
+    </ul>
+   
+   
+</li>
+    }
+      
+    </ul>
+

@@ -1,0 +1,203 @@
+﻿@model CL2.Models.PaginatedList<CL2.Models.SesionComision>
+
+@{
+    ViewData["Title"] = "Sesiones de Comisión";
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link runat="server" rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="favicon.ico" type="image/ico" />
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+
+    <main>
+
+        @* Encabezado de Sesión Plenarios y Breadcrumb *@
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Sesiones de Comisión</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item active">Sesiones de Comisiones</li>
+            </ol>
+
+            <form asp-action="Index" method="get">
+                <div class="row">
+                    @* Busqueda - botones de busqueda y limpiar casillas, junto con botón de agregar sesiones*@
+
+                    <div class="input-group form-actions no-color col-lg-6 col-md-6">
+                        <input type="text" class="form-control" placeholder="Búsqueda" name="SearchString" id="SearchString">
+                        <a asp-action="Index" class="btn btn-primary ml-3">Limpiar Campos</a>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1"></div>
+
+
+                    @* Agregar Nuevo *@
+                    <div class="col-lg-3 col-md-3">
+                        <button asp-action="SelectComision" class="btn btn-success btn-block">Agregar</button>
+
+                    </div>
+                    <div class="col-lg-1 col-md-1"></div>
+                    @* EXPORTAR A EXCEL *@
+                    <div class="col-lg-1 col-md-1">
+                        <button onclick="Export('xlsx')" class="btn btn-info fa fa-download btn-lg" style="width:70%">
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            @* Tabla de Sesiones de Comision *@
+            <table class="table table-bordered mt-lg-3  table-hover table-responsive-sm">
+                <thead class="thead-dark text-white">
+                    <tr class="text-lg-center ">
+                        <th>
+                            @Html.DisplayName("Comisión - Período Legis.")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Número Sesión")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Período de Sesión")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Fecha")
+                        </th>
+
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="sesionescomision">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ComisionLegislativos.Comision.NombreComision):
+                                @Html.DisplayFor(modelItem => item.ComisionLegislativos.Legislativo.AnnoLegislativo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumeroSesionComision)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PeriodoSesionComision)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaSesionComision)
+                            </td>
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.SesionComisionID" class="badge badge-warning">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@item.SesionComisionID" class="badge badge-primary">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@item.SesionComisionID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @* paginación *@
+            @{
+                var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.NextPage ? "disabled" : "";
+
+            }
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-light  @prevDisabled">  < Anterior </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-light @nextDisabled">Siguiente > </a>
+                </li>
+
+            </ul>
+
+
+
+            @* Tabla a exportar *@
+            <table hidden id="exportar">
+                <thead class="thead-dark text-white">
+                    <tr class="text-lg-center ">
+                        <th>
+                            @Html.DisplayName("Comisión - Período Legis.")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Número Sesión")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Período de Sesión")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Fecha")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Tipo de Sesión")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ComisionLegislativos.ComisionLegislativoID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumeroSesionComision)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PeriodoSesionComision)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaSesionComision)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoSesionComision)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+</body>
+</html>
+
+<script>
+    function Export(type, fn, dl) {
+        var elt = document.getElementById('exportar');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+        return dl ?
+            XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+            XLSX.writeFile(wb, fn || ('SesionesComision' + (type || 'xlsx')));
+    }
+
+
+    var $rows = $('#sesionescomision tr');
+    $('#SearchString').keyup(function () {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+        $rows.show().filter(function () {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
+</script>

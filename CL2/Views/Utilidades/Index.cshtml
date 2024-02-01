@@ -1,0 +1,156 @@
+﻿@model CL2.Models.ViewModels.Utilidades
+@{
+    ViewData["Title"] = "Datos Adicionales";
+}
+
+<partial name="_NotificationPartial" />
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Datos Adicionales</h1>
+
+    <ul class="breadcrumb mb-4 nav nav-pills">
+        <li class="nav-item ">
+            <a class="nav-link active rounded-0" data-toggle="pill" href="#home">Administraciones</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu1">Legislaciones</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu2">Temas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link rounded-0" data-toggle="pill" href="#menu3">Fracciones</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane container-fluid active p-0" id="home">
+            <h3 class="text-uppercase p-2 text-center">Administraciones</h3>
+            <div class="mt-4">
+                <asp:Button OnClick="location.href = '@Url.Action("Create","Administraciones")'" runat="server" ID="agregarAdmin" />
+            </div>
+            <table class="table table-bordered table-striped" id="tablaSmartAdmin">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.Administracions.FirstOrDefault().AdministracionPeriodo)</th>
+                        <th>@Html.DisplayNameFor(m => Model.Administracions.FirstOrDefault().PresidenteRepublica)</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var admin in Model.Administracions)
+                    {
+                        <tr>
+                            <td>@admin.AdministracionPeriodo</td>
+                            <td>@admin.PresidenteRepublica</td>
+                            <td>
+                                <a asp-controller="Administraciones" asp-action="Edit" asp-route-id="@admin.AdministracionID" class="badge badge-warning">Editar</a> |
+                                <a asp-controller="Administraciones" asp-action="Details" asp-route-id="@admin.AdministracionID" class="badge badge-primary">Detalles</a> |
+                                <a asp-controller="Administraciones" asp-action="Delete" asp-route-id="@admin.AdministracionID" class="badge badge-danger">Eliminar</a>
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container-fluid fade p-0" id="menu1">
+            <h3 class="text-uppercase p-2 text-center">Períodos Legislativos</h3>
+            <div class="mt-4">
+                <asp:Button OnClick="location.href = '@Url.Action("Create","Legislativos")'" runat="server" ID="agregarLeg" />
+            </div>
+            <table class="table table-bordered table-striped" id="tablaSmartLeg">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.Legislativos.FirstOrDefault().AnnoLegislativo)</th>
+                        <th>@Html.DisplayNameFor(m => Model.Legislativos.FirstOrDefault().AdministracionID)</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var legis in Model.Legislativos)
+                    {
+                        <tr>
+                            <td>@legis.AnnoLegislativo</td>
+                            <td>@legis.Administracion.AdministracionPeriodo</td>
+                            <td>
+                                <a asp-controller="Legislativos" asp-action="Edit" asp-route-id="@legis.LegislativoID" class="badge badge-warning">Editar</a>|
+                                <a asp-controller="Legislativos" asp-action="Details" asp-route-id="@legis.LegislativoID" class="badge badge-primary">Detalles</a> |
+                                <a asp-controller="Legislativos" asp-action="Delete" asp-route-id="@legis.LegislativoID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container-fluid fade p-0" id="menu2">
+            <h3 class="text-uppercase p-2 text-center">Temas</h3>
+            <div class="mt-4">
+                <asp:Button OnClick="location.href = '@Url.Action("Create","Temas")'" runat="server" ID="agregarTem" />
+            </div>
+            <table class="table table-bordered table-striped" id="tablaSmartTem">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.Temas.FirstOrDefault().TemaDesc)</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tema in Model.Temas)
+                    {
+                        <tr>
+                            <td>@tema.TemaDesc</td>
+                            <td>
+                                <a asp-controller="Temas" asp-action="Edit" asp-route-id="@tema.TemaID" class="badge badge-warning">Editar</a> |
+                                <a asp-controller="Temas" asp-action="Details" asp-route-id="@tema.TemaID" class="badge badge-primary">Detalles</a> |
+                                <a asp-controller="Temas" asp-action="Delete" asp-route-id="@tema.TemaID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane container-fluid fade p-0" id="menu3">
+            <h3 class="text-uppercase p-2 text-center">Fracciones</h3>
+            <div class="mt-4">
+                <asp:Button OnClick="location.href = '@Url.Action("Create","Fraccions")'" runat="server" ID="agregarFrac" />
+            </div>
+            <table class="table table-bordered table-striped" id="tablaSmartFrac">
+                <thead class="thead-dark text-white">
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => Model.Fraccions.FirstOrDefault().NombreFraccion)</th>
+                        <th>@Html.DisplayNameFor(m => Model.Fraccions.FirstOrDefault().SiglasFraccion)</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var frac in Model.Fraccions)
+                    {
+                        <tr>
+                            <td>@frac.NombreFraccion</td>
+                            <td>@frac.SiglasFraccion</td>
+                            <td>
+                                <a asp-controller="Fraccions" asp-action="Edit" asp-route-id="@frac.FraccionID" class="badge badge-warning">Editar</a> |
+                                <a asp-controller="Fraccions" asp-action="Details" asp-route-id="@frac.FraccionID" class="badge badge-primary">Detalles</a> |
+                                <a asp-controller="Fraccions" asp-action="Delete" asp-route-id="@frac.FraccionID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>

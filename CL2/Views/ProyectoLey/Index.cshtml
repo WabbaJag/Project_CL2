@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CL2.Models.ProyectoLey>
+
+@{
+    ViewData["Title"] = "Proyectos de Ley";
+}
+
+<partial name="_NotificationPartial" />
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link runat="server" rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="favicon.ico" type="image/ico" />
+</head>
+<body class="sb-nav-fixed">
+
+    @* Encabezado de Proyectos de Ley y Breadcrumb *@
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Proyectos de Ley</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item active">Proyectos de Ley</li>
+            </ol>
+            <div class="mt-4">
+                <asp:Button OnClick="location.href = '@Url.Action("Create","ProyectoLey")'" runat="server" ID="agregar" />
+            </div>
+
+
+            <!--Tabla de Proyectos de Ley-->
+            <table class="table table-bordered mt-lg-3  table-hover table-responsive-sm" id="tablaSmart">
+                <thead class="thead-dark text-white">
+                    <tr class="text-lg-center ">
+                        <th>
+                            @Html.DisplayName("Número de Expediente")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Título Corto")
+                        </th>
+                        <th class="text-lg-left">
+                            Opciones
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody class="text-lg-center">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumeroExpediente)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TituloCorto)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ProyectoLeyID" class="badge badge-warning">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@item.ProyectoLeyID" class="badge badge-primary">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ProyectoLeyID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+</body>
+</html>

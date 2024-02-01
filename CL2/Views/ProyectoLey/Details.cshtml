@@ -1,0 +1,129 @@
+﻿@model CL2.Models.ProyectoLey
+
+@{
+    ViewData["Title"] = "Detalles Proyecto de Ley";
+}
+
+<h1 class="mt-lg-4">Detalles Proyecto de Ley</h1>
+
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="ProyectoLey" asp-action="Index">Proyectos de Ley Listado</a></li>
+        <li class="breadcrumb-item active">Detalles Proyecto de Ley</li>
+    </ol>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NumeroExpediente)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.NumeroExpediente)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TituloCorto)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TituloCorto)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TituloCompleto)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TituloCompleto)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.FechaPresentacion)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.FechaPresentacion)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CantidadFirmas)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CantidadFirmas)
+        </dd>
+        @if (ViewBag.listaTemas != null)
+        {
+            <dt class="col-sm-3">
+                Temas
+            </dt>
+            <dd class="col-sm-3">
+                <select class="form-control" name="TemaID" asp-items="ViewBag.listaTemas" id="selectTema"></select>
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-3">
+                Temas
+            </dt>
+            <dd class="col-sm-9">
+                Sin temas asignados
+                <a asp-action="EditTemaAndDiputados" asp-route-id="@Model.ProyectoLeyID">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                    </svg>
+                </a>
+            </dd>
+        }
+    </dl>
+    @if (ViewBag.listaDiputados != null)
+    {
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <table class="table col-sm-12" id="diputadosTable">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th>
+                                    Diputados
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var diputado in ViewBag.listaDiputados)
+                            {
+                                <tr>
+                                    <td>@diputado.NombreDiputado @diputado.PrimerApellido @diputado.SegundoApellido</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <table class="table col-sm-12" id="diputadosTable">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th>
+                                    Diputados
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>No se seleccionaron diputados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="btn-group" role="group">
+    <a asp-action="Index" class="btn btn-dark">Volver</a>
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.ProyectoLeyID">Editar</a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>

@@ -1,0 +1,79 @@
+﻿@model CL2.Models.SesionPlenario
+
+@{
+    ViewData["Title"] = "Agregar Sesión Plenario";
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<html lang="en">
+<body class="sb-nav-fixed">
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-lg-4">Agregar Sesión de Plenario</h1>
+
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="breadcrumb-item active"><a asp-area="" asp-controller="SesionPlenarios" asp-action="Index">Sesiones de Plenario</a></li>
+                <li class="breadcrumb-item active">Agregar Sesión-Plenario</li>
+            </ol>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-4">
+                    <form id="formID" asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="PlenarioID" class="control-label"></label>
+                            <select asp-for="PlenarioID" class="form-control" asp-items="ViewBag.PlenarioID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NumeroSesion" class="control-label"></label>
+                            <input asp-for="NumeroSesion" class="form-control" />
+                            <small class="form-text text-muted">El número de Sesión es único y no debe repetirse según el Plenario elegido.</small>
+                            <span asp-validation-for="NumeroSesion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PeriodoSesionPlenario" class="control-label"></label>
+                            <select asp-for="PeriodoSesionPlenario" class="form-control">
+                                <option disabled> Seleccione el periodo legislativo</option>
+                                <option>Ordinario</option>
+                                <option>Extraordinario</option>
+                            </select>
+                            <span asp-validation-for="PeriodoSesionPlenario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TipoSesionPlenario" class="control-label"></label>
+                            <select asp-for="TipoSesionPlenario" class="form-control">
+                                <option disabled> Seleccione el tipo de sesión</option>
+                                <option>Ordinaria</option>
+                                <option>Extraordinaria</option>
+                            </select>
+                            <span asp-validation-for="TipoSesionPlenario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FechaSesionPlenario" class="control-label"></label>
+                            <input asp-for="FechaSesionPlenario" class="form-control" />
+                            <span asp-validation-for="FechaSesionPlenario" class="text-danger"></span>
+                        </div>
+
+                        <hr />
+                        
+                        <div class="form-group btn-group mt-lg-4 col-md-4" role="group">
+                            <a asp-action="Index" class=" btn btn-dark">Volver</a>
+                            <input type="submit" value="Agregar" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="~/js/functions.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

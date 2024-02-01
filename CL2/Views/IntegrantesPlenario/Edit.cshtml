@@ -1,0 +1,62 @@
+﻿@model CL2.Models.IntegrantesPlenario
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>IntegrantesPlenario</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<input type="hidden" asp-for="DiputadoID" />*@
+            <input type="hidden" asp-for="PlenarioID" />
+            @*<div class="form-group">
+            <label asp-for="FraccionID" class="control-label"></label>
+            <select asp-for="FraccionID" class="form-control" asp-items="ViewBag.FraccionID"></select>
+            <span asp-validation-for="FraccionID" class="text-danger"></span>
+        </div>*@
+           >
+
+
+          
+                <ul class="list-group-item" style="list-style-type:none">
+                    @foreach (var dip in @Model.Plenario.IntegrantesPlenarios)
+                    {
+                    <li>
+                        <input type="checkbox" name="DiputadoID" value="@dip.DiputadoID" /> @dip.Diputado.NombreDiputado @dip.Diputado.PrimerApellido @dip.Diputado.SegundoApellido
+                        <div class="form-group">
+                            <label asp-for="Detalle_Puesto" class="control-label"></label>
+                            <input asp-for="Detalle_Puesto" class="form-control" />
+                            <span asp-validation-for="Detalle_Puesto" class="text-danger"></span>
+                        </div>
+                    </li>
+                    }
+
+                </ul>
+           
+
+
+
+
+
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

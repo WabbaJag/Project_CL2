@@ -1,0 +1,88 @@
+@model CL2.Models.SesionComision
+
+@{
+    ViewData["Title"] = "Editar Sesión de Comisión";
+}
+
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Editar Sesión de Comisión</h1>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="SesionComisiones" asp-action="Index">Sesión de Comisión</a></li>
+        <li class="breadcrumb-item active">Editar Sesión de Comisión</li>
+
+    </ol>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SesionComisionID" />
+                <div class="form-group">
+
+                    <label asp-for="ComisionLegislativos.ComisionID" class="control-label"></label>
+                    <select asp-for="ComisionLegislativos.ComisionID" class="form-control" asp-items="ViewBag.Comision"></select>
+                    <span asp-validation-for="ComisionLegislativos.ComisionID " class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ComisionLegislativos.LegislativoID" class="control-label"></label>
+                    <select asp-for="ComisionLegislativos.LegislativoID" class="form-control" asp-items="ViewBag.Legislativo"></select>
+                    <span asp-validation-for="ComisionLegislativos.LegislativoID" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="ComisionLegislativoID" />
+                <div class="form-group">
+
+                    <label asp-for="NumeroSesionComision" class="control-label"></label>
+                    <input asp-for="NumeroSesionComision" class="form-control" />
+                    <span asp-validation-for="NumeroSesionComision" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeriodoSesionComision" class="control-label"></label>
+                    <input asp-for="PeriodoSesionComision" class="form-control" />
+                    <span asp-validation-for="PeriodoSesionComision" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaSesionComision" class="control-label"></label>
+                    <input asp-for="FechaSesionComision" class="form-control" />
+                    <span asp-validation-for="FechaSesionComision" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TipoSesionComision" class="control-label"></label>
+                    <input asp-for="TipoSesionComision" class="form-control" />
+                    <span asp-validation-for="TipoSesionComision" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group btn-group mt-lg-4" role="group">
+                    <a asp-action="Index" class="btn btn-dark">Volver</a>
+                    <input type="button" value="Guardar" onclick="pasarLegislativoyComision()" class="btn btn-success" />
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+

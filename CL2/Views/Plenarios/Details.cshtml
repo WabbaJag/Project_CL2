@@ -1,0 +1,84 @@
+﻿
+@model CL2.Models.Plenario
+
+@{
+    ViewData["Title"] = "Detalles Plenario";
+
+}
+
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Detalle Plenario</h1>
+
+    @* Breadcrumb *@
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Plenarios" asp-action="Index">Plenarios</a></li>
+        <li class="breadcrumb-item active">Detalles Plenario</li>
+
+    </ol>
+
+    <hr />
+
+
+
+
+    <form asp-area="" asp-controller="IntegrantesPlenario" asp-action="Index">
+
+        @* Plenario *@
+        <div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayName("Plenario")
+                </dt>
+                <dd class="col-sm-10">
+                    <br><br />
+                    @Html.DisplayFor(model => model.Administracion.AdministracionPeriodo)
+                    <br><br />
+                </dd>
+            </dl>
+        </div>
+
+
+        @* Integrantes del plenario *@
+
+        <table class="table mt-lg-3  table-hover table-responsive-sm">
+            <thead>
+                <tr>
+                    <th class="align-items-lg-center">
+                        @Html.DisplayName("Integrates de Plenario")
+                    </th>
+                    <th class="align-items-lg-center">
+                        @Html.DisplayName("Fracción")
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.IntegrantesPlenarios)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Diputado.NombreDiputado)   @Html.DisplayFor(modelItem => item.Diputado.PrimerApellido)
+                        </td>                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fraccion.NombreFraccion)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+    <hr />
+
+    <div class="btn-group" role="group">
+        <a asp-action="Index" class="btn btn-dark">Volver</a>
+        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.PlenarioID">Editar</a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>

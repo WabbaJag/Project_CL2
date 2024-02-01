@@ -1,0 +1,126 @@
+﻿@model CL2.Models.ControlPolitico
+
+@{
+    ViewData["Title"] = "Editar C.P.";
+    var sesion = Model.SesionPlenarioID;
+}
+
+<partial name="_NotificationPartial" />
+
+<script type="text/javascript">
+    function validateData() {
+
+        if ($("#OrderCode").val() == "") {
+            swal("Please enter OrderCode !");
+            return false;
+        } else if ($("#OrderPrice").val() == "") {
+            swal("Please enter OrderPrice !");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function Validate(ctl, event) {
+        event.preventDefault();
+        if (($('#ResumenComentario').val() != "") && ($('#DetalleComentario').val() != "") && ($('#PosicionControl').val() != null)) {
+            Swal.fire({
+                title: "Confirmación",
+                text: "¿Desea guardar los cambios?",
+                icon: "question",
+                showDenyButton: true,
+                confirmButtonText: 'Sí',
+                denyButtonText: 'No'
+            })
+                .then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        $("#EditForm").submit();
+                    } else {
+                        Swal.fire('Cambios no guardados.', '', 'info')
+                    }
+                });
+        } else {
+            $("#EditForm").submit();
+        }
+
+    }
+</script>
+
+<html lang="en">
+<body class="sb-nav-fixed">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-lg-4">Editar Control Político </h1>
+            <h2 class="mt-lg-4">de Sesión de Plenario #@sesion</h2>
+
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-controller="SesionPlenario" asp-action="Details" asp-route-id=@sesion>Sesión Plenario #@sesion</a></li>
+                <li class="breadcrumb-item"><a asp-controller="ControlPolitico" asp-action="IndexSpecific" asp-route-id=@sesion>Lista de C.P.</a></li>
+                <li class="breadcrumb-item active">Editar Control Político</li>
+            </ol>
+
+            <hr />
+
+            <form asp-action="Edit" id="EditForm">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @*Atributo escondido para SesionPlenarioID*@
+                        <input asp-for="SesionPlenarioID" type="hidden" value=@sesion />
+                        <input asp-for="ControlPoliticoID" type="hidden" />
+                        <div class="form-group">
+                            <label asp-for="DiputadoID" class="control-label"></label>
+                            <select asp-for="DiputadoID" class="form-control" asp-items="ViewBag.DiputadoID"></select>
+                            <span asp-validation-for="DiputadoID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TemaID" class="control-label"></label>
+                            <select asp-for="TemaID" class="form-control" asp-items="ViewBag.TemaID"></select>
+                            <span asp-validation-for="TemaID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResumenComentario" class="control-label"></label>
+                            <input asp-for="ResumenComentario" class="form-control" />
+                            <span asp-validation-for="ResumenComentario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DetalleComentario" class="control-label"></label>
+                            <input asp-for="DetalleComentario" class="form-control" />
+                            <span asp-validation-for="DetalleComentario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PosicionControl" class="control-label"></label>
+                            <select asp-for="PosicionControl" class="form-control">
+                                <option disabled> Seleccione la posición del diputado </option>
+                                <option>A favor</option>
+                                <option>En contra</option>
+                                <option>Neutral</option>
+                            </select>
+                            <span asp-validation-for="PosicionControl" class="text-danger"></span>
+                        </div>
+                        <hr />
+                        <div class="form-group btn-group mt-lg-4 col-md-4" role="group">
+                            <a asp-action="IndexSpecific" asp-route-id="@Model.SesionPlenarioID" class=" btn btn-dark">Volver</a>
+                            <input type="submit" value="Guardar" onclick="Validate(this, event);" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/js/functions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+
+</body>
+</html>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+
+}

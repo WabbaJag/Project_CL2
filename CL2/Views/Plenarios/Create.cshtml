@@ -1,0 +1,162 @@
+﻿@model CL2.Models.Plenario
+
+@{
+    ViewData["Title"] = "Agregar Plenario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="_NotificationPartial" />
+<html lang="en">
+<head>
+
+    <script src="~/js/functions.js" a></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <style>
+        .newspaper {
+            -webkit-column-count: 3; /* Chrome, Safari, Opera */
+            -moz-column-count: 3; /* Firefox */
+            column-count: 3;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <main>
+
+        <div class="container-fluid px-4">
+
+            <h1 class="mt-lg-4">Agregar Plenario</h1>
+
+            <hr />
+
+            @* Breadcrumb *@
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Plenarios" asp-action="Index">Plenario</a>
+                </li>
+                <li class="breadcrumb-item active">Agregar Plenario</li>
+            </ol>
+
+            <hr />
+
+
+
+            @*Form de Agregar Nuevo Plenario - muestra la Administración*@
+        <form id="formID" asp-action="Create" method="post" >
+
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-lg-2">
+                    <label asp-for="Administracion" class="control-label">Plenario</label>
+                </div>
+                <div class="col-lg-4">
+                    <select asp-for="AdministracionID" class="form-control" asp-items="ViewBag.AdministracionID" onchange="showDiv('hidden_div', this)">
+                        <option value="">-- Seleccione una Administración --</option>
+                    </select>
+                    <span asp-validation-for="AdministracionID" class="text-danger" />
+
+                </div>
+            </div>
+
+            @*SE MUESTRAN DIPUTADOS AL SELECCIONAR UNA ADMINISTRACIÓN*@
+            <div class="mt-3 ">
+
+                <div id="hidden_div" style="display: none;">
+
+                    <div class="row input-group  no-color mb-lg-5">
+                        <div class="col-lg-2">
+                            Diputados
+                        </div>
+                        @*BUSCAR DIPUTADO*@
+                        <div class="input-group form-actions no-color col-lg-4 col-md-4">
+                            <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar Diputado" title="Ingrese parte del nombre">
+                        </div>
+                    </div>
+                    @*CHECKBOX LIST PARA AGREGAR DIPUTADOS*@
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Seleccionar Diputado</p>
+                            <br />
+
+
+                            <ul id="myUL" class="list-group-item newspaper" style="list-style-type:none">
+
+                                @foreach (var dip in ViewBag.Diputados)
+                                {
+                                    <li>
+
+                                        <label>
+                                            <input type="checkbox" name="DiputadosID" value="@dip.DiputadoID" /><a>  @dip.NombreDiputado @dip.PrimerApellido @dip.SegundoApellido</a> <br />
+
+                                        </label>
+
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            @* grupo de botones al final: agregar y atrás*@
+            <a hidden asp-action="Index" class="btn btn-dark" id="regresar">Volver</a>
+            <div class="form-group btn-group mt-lg-4 col-md-4" role="group">
+                <button class="btn btn-dark" onclick="ValidateReturn()">Volver</button>
+                <input type="submit" value="Agregar" onclick="Validate(this, event,'Plenario');" class="btn btn-success" />
+            </div>
+
+        </form>
+
+
+        </div>
+
+    </main>
+
+
+</body>
+</html>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@* FUNCION PARA QUE SE MUESTREN LOS DIPUTADOS TRAS SELECCIONAR ADMINISTRACIÓN *@
+<script>
+    function showDiv(divId, element) {
+        document.getElementById(divId).style.display = element.value != 0 ? 'block' : 'none';
+    }
+</script>
+
+@* FUNCIÓN PARA EL INPUT DE BUSQUEDA DIPUTADO *@
+<script>
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+

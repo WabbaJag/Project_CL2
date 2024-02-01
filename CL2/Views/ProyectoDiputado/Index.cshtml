@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CL2.Models.ProyectoDiputado>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1></h1>
+
+<p>
+    <a asp-action="Create">Crear w</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProyectosLey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diputado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProyectosLey.ProyectoLeyID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diputado.DiputadoID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>

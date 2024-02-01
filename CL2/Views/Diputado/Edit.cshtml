@@ -1,0 +1,117 @@
+﻿@model CL2.Models.Diputado
+
+@{
+    ViewData["Title"] = "Editar Diputado";
+}
+
+<partial name="_NotificationPartial" />
+
+<html lang="en">
+<body class="sb=nav-fixed">
+    <div>
+        <main>
+            <div class="container-fluid- px-4">
+                <h1 class="mt-lg-4">Editar Diputado</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                    <li class="breadcrumb-item active"><a asp-area="" asp-controller="Diputado" asp-action="Index">Diputados Listado</a></li>
+                    <li class="breadcrumb-item active">Editar Diputado</li>
+                </ol>
+
+                <hr />
+                <form asp-action="Edit">
+                    <div class="row">
+                        <div class="col-md-6">
+
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="DiputadoID" />
+                            <div class="form-group">
+                                <label asp-for="NombreDiputado" class="control-label"></label>
+                                <input asp-for="NombreDiputado" class="form-control" />
+                                <span asp-validation-for="NombreDiputado" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PrimerApellido" class="control-label"></label>
+                                <input asp-for="PrimerApellido" class="form-control" />
+                                <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SegundoApellido" class="control-label"></label>
+                                <input asp-for="SegundoApellido" class="form-control" />
+                                <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Provincia" class="control-label"></label>
+                                <select asp-for="Provincia" class="form-control">
+                                    <option disabled> Seleccione la provincia de representación </option>
+                                    <option value="San José">San José</option>
+                                    <option value="Alajuela">Alajuela</option>
+                                    <option value="Cartago">Cartago</option>
+                                    <option value="Heredia">Heredia</option>
+                                    <option value="Guanacaste">Guanacaste</option>
+                                    <option value="Puntarenas">Puntarenas</option>
+                                    <option value="Limón">Limón</option>
+                                </select>
+                                <span asp-validation-for="Provincia" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="CorreoDiputado" class="control-label"></label>
+                                <input asp-for="CorreoDiputado" class="form-control" />
+                                <span asp-validation-for="CorreoDiputado" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TelefonoDiputado" class="control-label"></label>
+                                <input asp-for="TelefonoDiputado" class="form-control" />
+                                <span asp-validation-for="TelefonoDiputado" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TelefonoDiputado2" class="control-label"></label>
+                                <input asp-for="TelefonoDiputado2" class="form-control" />
+                                <span asp-validation-for="TelefonoDiputado2" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="GeneroDiputado" class="control-label"></label>
+                                <select asp-for="GeneroDiputado" class="form-control">
+                                    <option disabled> Seleccione el Género </option>
+                                    <option>M</option>
+                                    <option>F</option>
+                                    <option>NB</option>
+                                </select>
+                                <span asp-validation-for="GeneroDiputado" class="text-danger" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Imagen" class="control-label"></label>
+                                <input asp-for="Imagen" class="form-control" />
+                                <span asp-validation-for="Imagen" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group btn-group mt-lg-4" role="group">
+                            <a asp-action="Index" class=" btn btn-dark">Volver</a>
+                            <input type="submit" value="Guardar" class="btn btn-success" />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+            <script src="js/scripts.js"></script>
+
+            @section Scripts {
+                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            }
+
+        </main>
+    </div>
+</body>
+</html>

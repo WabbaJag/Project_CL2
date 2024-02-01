@@ -1,0 +1,34 @@
+﻿@model CL2.Models.TipoActividadComision
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TipoActividadComision</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TipoActividadComisionID" />
+            <div class="form-group">
+                <label asp-for="DetalleActividadComision" class="control-label"></label>
+                <input asp-for="DetalleActividadComision" class="form-control" />
+                <span asp-validation-for="DetalleActividadComision" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,39 @@
+﻿@model CL2.Models.Administracion
+
+@{
+    ViewData["Title"] = "Editar Administración";
+}
+<partial name="_NotificationPartial" />
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Editar Administración</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AdministracionID" />
+                <div class="form-group">
+                    <label asp-for="AdministracionPeriodo" class="control-label"></label>
+                    <input asp-for="AdministracionPeriodo" class="form-control" />
+                    <span asp-validation-for="AdministracionPeriodo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PresidenteRepublica" class="control-label"></label>
+                    <input asp-for="PresidenteRepublica" class="form-control" />
+                    <span asp-validation-for="PresidenteRepublica" class="text-danger"></span>
+                </div>
+                <div class="form-group btn-group mt-lg-4" role="group">
+                    <a asp-controller="Utilidades" asp-action="Index" class=" btn btn-dark">Volver</a>
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr />
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>

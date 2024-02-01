@@ -1,0 +1,299 @@
+﻿@model CL2.Models.Comision
+
+@{
+    ViewData["Title"] = "Editar Comisión";
+    var idLegislativo = ViewBag.idLegislativo;
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<div class="container-fluid px-4">
+
+    <h1 class="mt-lg-4">Editar Comisión</h1>
+
+
+    @* Breadcrumb *@
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Comisions" asp-action="Index">Comisiones</a></li>
+        <li class="breadcrumb-item active">Editar Comisión</li>
+    </ol>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            @if(TempData["Duplicate"] != null)
+            {
+                <div class="text-danger"> @TempData["Duplicate"]</div>
+            }
+            <form asp-action="Edit" id="formID">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ComisionID" />
+                <div class="form-group">
+                    @*<label asp-for="NombreComision" class="control-label"></label>*@
+                    <label asp-for="NombreComision" class="control-label">Nombre de Comisión</label>
+                    <input asp-for="NombreComision" class="form-control" />
+                    <span asp-validation-for="NombreComision" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Detalle" class="control-label"></label>
+                    <input asp-for="Detalle" class="form-control" />
+                    <span asp-validation-for="Detalle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tipo" class="control-label"></label>
+                    <input asp-for="Tipo" class="form-control" />
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @*<label asp-for="TemaID" class="control-label"></label>*@
+                    <label asp-for="TemaID" class="control-label">Tema de comisión</label>
+                    <select asp-for="TemaID" class="form-control" asp-items="ViewBag.listaTemas"></select>
+                    <span asp-validation-for="TemaID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @if (ViewBag.listaAnosLegislativo != null)
+                    {
+                        <label class="control-label">Año legislativo</label>
+                        <a asp-action="AddLegislativeYear" asp-route-ComisionID="@Model.ComisionID" asp-route-volverAEditar="1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        </a>
+                        <a href="#" onclick="redirectToEdit()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                        </a>
+                        <a href="#" onclick="deleteAnoLegislativo()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                            </svg>
+                        </a>
+                        <br />
+                        <select class="form-control" name="LegislativoID" asp-items="ViewBag.listaAnosLegislativo" id="selectAnoLegislativo" onchange="ActualizarDiputados()"></select>
+                    }
+                    else
+                    {
+                        @Html.DisplayName("Año legislativo no asignado")
+                        <a asp-action="AddLegislativeYear" asp-route-ComisionID="@Model.ComisionID">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                        </a>
+                    }
+                </div>
+                <div class="form-group">
+                    <table class="table col-sm-12" id="diputadosTable">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th>
+                                    Diputados
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                @* grupo de botones al final: agregar y atrás *@
+                <div class="form-group btn-group mt-lg-4" role="group">
+                    <a hidden asp-action="Index" class="btn btn-dark" id="regresar"></a>
+                    <button class="btn btn-dark" onclick="ValidateReturn()">Volver</button>
+                    <!-- Botón para abrir el modal -->
+                    <input type="submit" value="Guardar" onclick="Validate(this, event,'Comisión', 2);" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: '/Comisions/GetDiputadosFromComision',
+            data: {
+                LegislativoID: @idLegislativo,
+                ComisionID: @Model.ComisionID
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data.mensaje == '1') {
+                    for (i = 0; i < data.datos.length; i++) {
+                        var tbodyRef = document.getElementById('diputadosTable').getElementsByTagName('tbody')[0];
+
+                        // Insert a row at the end of table
+                        var newRow = tbodyRef.insertRow();
+
+                        // Insert a cell at the end of the row
+                        var newCell = newRow.insertCell();
+
+                        // Append a text node to the cell
+                        var newText = document.createTextNode(data.datos[i].nombreDiputado + " " + data.datos[i].primerApellido + " " + data.datos[i].segundoApellido);
+                        newCell.appendChild(newText);
+                    }
+                } else if (data.mensaje == '2') {
+                    var tbodyRef = document.getElementById('diputadosTable').getElementsByTagName('tbody')[0];
+
+                    // Insert a row at the end of table
+                    var newRow = tbodyRef.insertRow();
+
+                    // Insert a cell at the end of the row
+                    var newCell = newRow.insertCell();
+
+                    // Append a text node to the cell
+                    var newText = document.createTextNode('No se seleccionaron Diputados');
+                    newCell.appendChild(newText);
+                } else {
+                    Swal.fire(
+                        '¡Ups!',
+                        'Ocurrió un error al cargar los diputados del año legislativo.',
+                        'error'
+                    );
+                }
+            },
+            error: function(data) {
+                Swal.fire(
+                    '¡Ups!',
+                    'Ocurrió un error al cargar los diputados del año legislativo.',
+                    'error'
+                );
+            }
+        });
+    });
+
+    function ActualizarDiputados() {
+        var idAnoLegislativo = $("#selectAnoLegislativo").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/Comisions/GetDiputadosFromComision',
+            data: {
+                LegislativoID: idAnoLegislativo,
+                ComisionID: @Model.ComisionID
+            },
+            dataType: 'json',
+            success: function(data) {
+                $("#diputadosTable tbody tr").remove();
+                if (data.mensaje == '1') {
+                    for (i = 0; i < data.datos.length; i++) {
+                        var tbodyRef = document.getElementById('diputadosTable').getElementsByTagName('tbody')[0];
+
+                        // Insert a row at the end of table
+                        var newRow = tbodyRef.insertRow();
+
+                        // Insert a cell at the end of the row
+                        var newCell = newRow.insertCell();
+
+                        // Append a text node to the cell
+                        var newText = document.createTextNode(data.datos[i].nombreDiputado + " " + data.datos[i].primerApellido + " " + data.datos[i].segundoApellido);
+                        newCell.appendChild(newText);
+                    }
+                    $('#loadingSpinner').hide();
+                } else if (data.mensaje == '2') {
+                    var tbodyRef = document.getElementById('diputadosTable').getElementsByTagName('tbody')[0];
+
+                    // Insert a row at the end of table
+                    var newRow = tbodyRef.insertRow();
+
+                    // Insert a cell at the end of the row
+                    var newCell = newRow.insertCell();
+
+                    // Append a text node to the cell
+                    var newText = document.createTextNode('No se seleccionaron diputados');
+                    newCell.appendChild(newText);
+                } else {
+                    Swal.fire(
+                        '¡Ups!',
+                        'Ocurrió un error al cargar los diputados del año legislativo.',
+                        'error'
+                    );
+                }
+            },
+            error: function(data) {
+                Swal.fire(
+                    '¡Ups!',
+                    'Ocurrió un error al cargar los diputados del año legislativo.',
+                    'error'
+                );
+            }
+        });
+    }
+
+    function redirectToEdit() {
+        var idCom = @Model.ComisionID;
+        var idAnoLegislativo = $("#selectAnoLegislativo").val();
+
+        setTimeout(() => {
+            const x = window.location.origin;
+            location.replace(`${x}/Comisions/EditLegislativeYear?ComisionID=` + idCom + "&LegislativoID=" + idAnoLegislativo);
+            }, 1000)
+    }
+
+    function deleteAnoLegislativo() {
+        var idCom = @Model.ComisionID;
+        var idAnoLegislativo = $("#selectAnoLegislativo").val();
+
+        Swal.fire({
+            title: 'Eliminar',
+            text: "¿Desea eliminar este año legislativo de la comisión?",
+            icon: 'warning',
+            showDenyButton: true,
+            confirmButtonText: 'Sí',
+            denyButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/Comisions/DeleteLegislativeYear',
+                    data: {
+                        ComisionID: idCom,
+                        LegislativoID: idAnoLegislativo
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.mensaje == '200') {
+                            setTimeout(() => {
+                                window.location.href = "/Comisions/Edit/" + idCom;
+                            }, 3000)
+                            Swal.fire({
+                                title: '¡Año legislativo eliminado!',
+                                text: 'El año legislativo fue eliminado correctamente de la comisión.',
+                                icon: 'success',
+                                timer: 3000
+                            });
+
+                        } else {
+                            Swal.fire(
+                                '¡Ups!',
+                                'Ocurrió un error al eliminar el año legislativo de la comisión.',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(data) {
+                        Swal.fire(
+                            '¡Ups!',
+                            'Ocurrió un error al eliminar el año legislativo de la comisión.',
+                            'error'
+                        );
+                    }
+                });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
+    }
+</script>
+

@@ -1,0 +1,216 @@
+﻿@model CL2.Models.ProyectoLey
+
+@{
+    ViewData["Title"] = "Editar Proyecyo de Ley";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-lg-4">Editar Proyecto de Ley</h1>
+
+
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="ProyectoLey" asp-action="Index">Proyectos de Ley Listado</a></li>
+        <li class="breadcrumb-item active">Editar Proyecto de Ley</li>
+    </ol>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ProyectoLeyID" />
+                <div class="form-group">
+                    <label asp-for="NumeroExpediente" class="control-label"></label>
+                    <input asp-for="NumeroExpediente" class="form-control" />
+                    <span asp-validation-for="NumeroExpediente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TituloCorto" class="control-label"></label>
+                    <input asp-for="TituloCorto" class="form-control" />
+                    <span asp-validation-for="TituloCorto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TituloCompleto" class="control-label"></label>
+                    <input asp-for="TituloCompleto" class="form-control" />
+                    <span asp-validation-for="TituloCompleto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaPresentacion" class="control-label"></label>
+                    <input asp-for="FechaPresentacion" class="form-control" />
+                    <span asp-validation-for="FechaPresentacion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CantidadFirmas" class="control-label"></label>
+                    <input asp-for="CantidadFirmas" class="form-control" />
+                    <span asp-validation-for="CantidadFirmas" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @if (ViewBag.listaTemas != null)
+                    {
+                        <label class="control-label">Tema</label>
+                        <a asp-action="EditTemaAndDiputados" asp-route-id="@Model.ProyectoLeyID">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                        </a>
+                        <a href="#" onclick="deleteTema()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                            </svg>
+                        </a>
+                        <br />
+                        <select class="form-control" name="TemaID" asp-items="ViewBag.listaTemas" id="selectTema"></select>
+                    }
+                    else
+                    {
+                        @Html.DisplayName("No se seleccionaron temas")
+                        <a asp-action="EditTemaAndDiputados" asp-route-id="@Model.ProyectoLeyID">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                        </a>
+                    }
+                </div>
+                @if (ViewBag.listaDiputados != null)
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <table class="table col-sm-12" id="diputadosTable">
+                                    <thead class="thead-light">
+                                        <tr class="text-center">
+                                            <th>
+                                                Diputados
+                                                <a asp-action="EditTemaAndDiputados" asp-route-id="@Model.ProyectoLeyID">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                    </svg>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var diputado in ViewBag.listaDiputados)
+                                        {
+                                            <tr>
+                                                <td>@diputado.NombreDiputado @diputado.PrimerApellido @diputado.SegundoApellido</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <table class="table col-sm-12" id="diputadosTable">
+                                    <thead class="thead-light">
+                                        <tr class="text-center">
+                                            <th>
+                                                Diputados
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>No se seleccionaron diputados</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <hr />
+                <div class="form-group btn-group mt-lg-4" role="group">
+                    <a asp-action="Index" class=" btn btn-dark">Volver</a>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script type="text/javascript">
+    function deleteTema() {
+        var idProyecto = @Model.ProyectoLeyID;
+        var idTema = $("#selectTema").val();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Eliminar',
+            text: "¿Desea eliminar este tema del proyecto de ley?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Eliminando tema...',
+                    timer: 4000,
+                    timerProgressBar: true,
+                });
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/ProyectoLey/DeleteTemaFromProyecto',
+                    data: {
+                        ProyectoID: idProyecto,
+                        TemaID: idTema
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.mensaje == '1') {
+                            Swal.fire({
+                                title: '¡Tema eliminado!',
+                                text: 'El tema fue eliminado correctamente del proyecto de ley.',
+                                icon: 'success',
+                                timer: 3000
+                            });
+                            setTimeout(() => {
+                                window.location.href = "/ProyectoLey/Edit/" + idProyecto;
+                            }, 3000)
+                        } else {
+                            Swal.fire(
+                                '¡Ups!',
+                                'Ocurrió un error al eliminar el tema del proyecto de ley.',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(data) {
+                        Swal.fire(
+                            '¡Ups!',
+                            'Ocurrió un error al eliminar el tema del proyecto de ley.',
+                            'error'
+                        );
+                    }
+                });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
+    }
+</script>

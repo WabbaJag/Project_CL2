@@ -1,0 +1,118 @@
+﻿@model IEnumerable<CL2.Models.ControlPolitico>
+
+@{
+    ViewData["Title"] = "Control Político";
+}
+
+<partial name="_NotificationPartial" />
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link runat="server" rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="favicon.ico" type="image/ico" />
+</head>
+<body class="sb-nav-fixed">
+
+    <main>
+
+        @* Encabezado de Sesión Plenarios y Breadcrumb *@
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Lista completa de  Control Político</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a asp-controller="SesionPlenarios" asp-action="Index">Sesiones de Plenario</a></li>
+                <li class="breadcrumb-item active">Lista de Control Político</li>
+            </ol>
+
+            <div class="mt-4">
+                <asp:Button OnClick="notificar()" runat="server" ID="agregar" />
+            </div>
+
+
+            @* Tabla de Todos los Control Politico *@
+            <table class="table table-bordered mt-lg-3  table-hover table-responsive-sm" id="tablaSmart">
+                <thead class="thead-dark text-white">
+                    <tr class="text-lg-center">
+                        <th>
+                            @Html.DisplayName("Fecha de Sesión")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Resumen Comentario")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Detalle Comentario")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Posición")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Tema")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Diputado")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Opciones")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="busqueda">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="SesionPlenarios" asp-action="Details" asp-route-id="@item.SesionPlenarioID"
+                                   class="badge badge-success">@Html.DisplayFor(modelItem => item.SesionPlenario.FechaSesionPlenario)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ResumenComentario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DetalleComentario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PosicionControl)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Temas.TemaDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Diputados.nombreCompleto)
+                            </td>
+                            <td class="text-lg-center">
+                                <a asp-action="Edit" asp-route-id="@item.ControlPoliticoID" class="badge badge-warning">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@item.ControlPoliticoID" class="badge badge-primary">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ControlPoliticoID" class="badge badge-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+</body>
+</html>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function notificar() {
+        Swal.fire({
+            title: "Para agregar un registro de Control Político, ingrese a una sesión específica seleccionando la fecha.",
+            text: "",
+            icon: "question"
+        });
+    }
+</script>
